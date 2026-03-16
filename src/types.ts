@@ -94,7 +94,8 @@ export type Command = {
 
 export type AvailabilityCommand = Command & {
   code: 'AN';
-  travelDate: string;
+  travelDay: string;
+  travelMonth: string;
   origin: string;
   destination: string;
   airlineBrandCode?: string;

@@ -27,6 +27,8 @@ const MONTH_RE = /^[A-Za-z]{3}$/;
 const AIRPORT_RE = /^[A-Za-z]{3}$/;
 const BRAND_RE = /^[A-Za-z0-9]{2,4}$/;
 
+const MONTH_CODES_RE = /^JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC$/;
+
 class Parser {
   private readonly tokens: Token[];
   private index = 0;
@@ -105,6 +107,10 @@ class Parser {
       throw new ParseError('Invalid AN payload values', routeToken.span);
     }
 
+    if (!MONTH_CODES_RE.test(month)) {
+      throw new ParseError('Invalid AN date value', routeToken.span);
+    }
+
     params.push({ name: 'travelDate', value: travelDate });
     params.push({ name: 'origin', value: origin.toUpperCase() });
     params.push({ name: 'destination', value: destination.toUpperCase() });
@@ -124,7 +130,8 @@ class Parser {
     return {
       code: 'AN',
       params,
-      travelDate,
+      travelDay: day,
+      travelMonth: month,
       origin: origin.toUpperCase(),
       destination: destination.toUpperCase(),
       ...(airlineBrandCode ? { airlineBrandCode } : {}),
