@@ -21,7 +21,7 @@ class ParseError extends Error {
 type ParseInput = string | Token[];
 
 const isCommandCode = (type: Token['type']): type is CommandCode =>
-  ['AN', 'SS', 'NM', 'APM', 'APE', 'TKTL', 'ER', 'XE', 'FXP', 'FXB', 'TTK', 'TT'].includes(type);
+  ['AN', 'SS', 'NM', 'APM', 'APE', 'TKTL', 'ER', 'XE', 'FXP', 'FXB', 'TTK'].includes(type);
 
 const MONTH_RE = /^[A-Za-z]{3}$/;
 const AIRPORT_RE = /^[A-Za-z]{3}$/;
@@ -83,8 +83,6 @@ class Parser {
         return { code, params };
       case 'TTK':
         return this.parseIssueTtk(params);
-      case 'TT':
-        return this.parseIssueTt(params);
     }
   }
 
@@ -130,6 +128,7 @@ class Parser {
     return {
       code: 'AN',
       params,
+      travelDate,
       travelDay: day,
       travelMonth: month,
       origin: origin.toUpperCase(),
@@ -303,26 +302,10 @@ class Parser {
     this.expect('SLASH', 'Expected "/" after TTK');
     this.skipWs();
 
-    const selector = this.readTSelector(true);
-    if (selector === '*') {
-      params.push({ name: 'mode', value: 'all' });
-      return { code: 'TTK', params, mode: 'all' };
-    }
-
-    params.push({ name: 'mode', value: 'single' });
-    params.push({ name: 'tstType', value: String(selector) });
-    return { code: 'TTK', params, mode: 'single', tstType: selector };
-  }
-
-  private parseIssueTt(params: CommandParam[]): ParsedCommand {
-    this.skipWs();
-    this.expect('SLASH', 'Expected "/" after TT');
-    this.skipWs();
-
     const tstType = this.readTSelector(false);
     this.skipWs();
 
-    this.expect('DASH', 'Expected "-" and quantity after TT/T<n>');
+    this.expect('DASH', 'Expected "-" and quantity after TTK/T<n>');
     this.skipWs();
 
     const quantityToken = this.peek();
@@ -335,7 +318,7 @@ class Parser {
     params.push({ name: 'quantity', value: String(quantityToken.value) });
 
     return {
-      code: 'TT',
+      code: 'TTK',
       params,
       tstType,
       quantity: quantityToken.value,
@@ -371,7 +354,7 @@ class Parser {
       }
     }
 
-    throw new ParseError('Expected T selector format like T1 or T*', token.span);
+    throw new ParseError(`Expected T selector format like ${allowAll ? 'T1 or T*' : 'T1'}`, token.span);
   }
 
   private readRequiredValue(errorMessage: string): Token {

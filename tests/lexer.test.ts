@@ -21,10 +21,8 @@ describe('tokenize', () => {
     expect(ape.tokens.map((t) => t.type)).toEqual(['APE', 'WS', 'DASH', 'WS', 'FREETEXT', 'EOF']);
   });
 
-  test('tokenizes TTK and TT issue commands', () => {
-    expect(tokenize('TTK/T1').tokens.map((t) => t.type)).toEqual(['TTK', 'SLASH', 'WORD', 'EOF']);
-    expect(tokenize('TTK/T*').tokens.map((t) => t.type)).toEqual(['TTK', 'SLASH', 'WORD', 'STAR', 'EOF']);
-    expect(tokenize('TT/T1-3').tokens.map((t) => t.type)).toEqual(['TT', 'SLASH', 'WORD', 'DASH', 'INTEGER', 'EOF']);
+  test('tokenizes TTK issue command', () => {
+    expect(tokenize('TTK/T1-3').tokens.map((t) => t.type)).toEqual(['TTK', 'SLASH', 'WORD', 'DASH', 'INTEGER', 'EOF']);
   });
 
   test('tokenizes with whitespace and multiline positions', () => {

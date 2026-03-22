@@ -91,25 +91,11 @@ describe('parse', () => {
   });
 
   test('parses ticket issuance commands', () => {
-    const ttkSingle = parse('TTK/T1');
-    expect(ttkSingle.code).toBe('TTK');
-    if (ttkSingle.code === 'TTK') {
-      expect(ttkSingle.mode).toBe('single');
-      expect(ttkSingle.tstType).toBe(1);
-    }
-
-    const ttkAll = parse('TTK/T*');
-    expect(ttkAll.code).toBe('TTK');
-    if (ttkAll.code === 'TTK') {
-      expect(ttkAll.mode).toBe('all');
-      expect(ttkAll.tstType).toBeUndefined();
-    }
-
-    const tt = parse('TT/T1-3');
-    expect(tt.code).toBe('TT');
-    if (tt.code === 'TT') {
-      expect(tt.tstType).toBe(1);
-      expect(tt.quantity).toBe(3);
+    const ttk = parse('TTK/T1-3');
+    expect(ttk.code).toBe('TTK');
+    if (ttk.code === 'TTK') {
+      expect(ttk.tstType).toBe(1);
+      expect(ttk.quantity).toBe(3);
     }
   });
 
@@ -136,7 +122,7 @@ describe('parse', () => {
   });
 
   test('throws for invalid TTK selector', () => {
-    expect(() => parse('TTK/TX')).toThrow('Expected T selector format like T1 or T*');
+    expect(() => parse('TTK/TX')).toThrow('Expected T selector format like T1');
   });
 
   test('throws on unexpected trailing token', () => {

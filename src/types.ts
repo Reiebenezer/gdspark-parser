@@ -10,7 +10,6 @@ export const COMMAND_CODES = [
   'FXP',
   'FXB',
   'TTK',
-  'TT',
 ] as const;
 
 export type CommandCode = (typeof COMMAND_CODES)[number];
@@ -94,6 +93,7 @@ export type Command = {
 
 export type AvailabilityCommand = Command & {
   code: 'AN';
+  travelDate: string;
   travelDay: string;
   travelMonth: string;
   origin: string;
@@ -153,12 +153,6 @@ export type PricingCommand = Command & {
 
 export type TicketIssueTtkCommand = Command & {
   code: 'TTK';
-  mode: 'all' | 'single';
-  tstType?: number;
-};
-
-export type TicketIssueTtCommand = Command & {
-  code: 'TT';
   tstType: number;
   quantity: number;
 };
@@ -173,5 +167,4 @@ export type ParsedCommand =
   | EndRecordCommand
   | DeleteLineCommand
   | PricingCommand
-  | TicketIssueTtkCommand
-  | TicketIssueTtCommand;
+  | TicketIssueTtkCommand;

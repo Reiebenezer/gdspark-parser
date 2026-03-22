@@ -41,8 +41,7 @@ The parser currently supports:
 - `XE` delete line number
 - `FXP` pricing on selected booking class
 - `FXB` lowest available pricing
-- `TTK` ticket issuance by TST selector
-- `TT` ticket issuance with quantity
+- `TTK` ticket issuance with quantity
 
 ## Syntax Notes
 
@@ -58,10 +57,8 @@ The parser currently supports:
 - Example: `TKTL05MAR`
 - `XE`: requires whitespace before integer line number
 - Example: `XE 2`
-- `TTK`: requires `/T<n>` or `/T*`
-- Example: `TTK/T1`, `TTK/T*`
-- `TT`: requires `/T<n>-<quantity>`
-- Example: `TT/T1-3`
+- `TTK`: requires `/T<n>-<quantity>`
+- Example: `TTK/T1-3`
 
 ## Examples
 
@@ -77,7 +74,5 @@ ER
 XE 2
 FXP
 FXB
-TTK/T1
-TTK/T*
-TT/T1-3
+TTK/T1-3
 ```
