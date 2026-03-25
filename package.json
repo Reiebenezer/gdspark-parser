@@ -1,24 +1,45 @@
 {
   "name": "@reiebenezer/gdspark-parser",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "GDS command lexer/parser library",
   "type": "module",
   "private": false,
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.ts",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./lexer": "./src/lexer.ts",
-    "./parser": "./src/parser.ts",
-    "./types": "./src/types.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./lexer": {
+      "types": "./dist/lexer.d.ts",
+      "import": "./dist/lexer.js"
+    },
+    "./parser": {
+      "types": "./dist/parser.d.ts",
+      "import": "./dist/parser.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    }
   },
   "files": [
-    "src"
+    "dist"
   ],
   "scripts": {
-    "test": "bun test"
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit"
   },
+  "keywords": [
+    "gdspark",
+    "gds",
+    "interpreter",
+    "frontend"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@types/bun": "latest"
   },
