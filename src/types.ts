@@ -101,7 +101,7 @@ export type AvailabilityCommand = Command & {
   airlineBrandCode?: string;
 };
 
-export type SellCommand = Command & {
+export type SelectSeatCommand = Command & {
   code: 'SS';
   passengerCount: number;
   bookingClass: string;
@@ -151,7 +151,7 @@ export type PricingCommand = Command & {
   code: 'FXP' | 'FXB';
 };
 
-export type TicketIssueTtkCommand = Command & {
+export type TicketIssueCommand = Command & {
   code: 'TTK';
   tstType: number;
   quantity: number;
@@ -159,7 +159,7 @@ export type TicketIssueTtkCommand = Command & {
 
 export type ParsedCommand =
   | AvailabilityCommand
-  | SellCommand
+  | SelectSeatCommand
   | NameCommand
   | PassengerMobileCommand
   | PassengerEmailCommand
@@ -167,4 +167,4 @@ export type ParsedCommand =
   | EndRecordCommand
   | DeleteLineCommand
   | PricingCommand
-  | TicketIssueTtkCommand;
+  | TicketIssueCommand;
