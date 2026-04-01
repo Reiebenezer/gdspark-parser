@@ -101,7 +101,7 @@ export type AvailabilityCommand = Command & {
   airlineBrandCode?: string;
 };
 
-export type SelectSeatCommand = Command & {
+export type SellSegmentCommand = Command & {
   code: 'SS';
   passengerCount: number;
   bookingClass: string;
@@ -159,7 +159,7 @@ export type TicketIssueCommand = Command & {
 
 export type ParsedCommand =
   | AvailabilityCommand
-  | SelectSeatCommand
+  | SellSegmentCommand
   | NameCommand
   | PassengerMobileCommand
   | PassengerEmailCommand

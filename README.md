@@ -51,12 +51,12 @@ The parser currently supports:
 - Example: `SS1Y3`, `SS2T5`
 - `NM`: one or more entries in `<count><SURNAME>/<Given>/<Given>` format, comma-separated for multiple entries; trailing title is supported
 - Example: `NM1SMITH/John Mr`, `NM1SMITH/John,1ROXAS/Peter`
-- `APM` / `APE`: accepts dashed and non-dashed value entry
-- Example: `APM - 09171234567`, `APE - r@r.com`
+- `APM` / `APE`: value must be attached directly to the command code
+- Example: `APM09171234567`, `APEr@r.com`
 - `TKTL`: compact date format `TKTLDDMMM`
 - Example: `TKTL05MAR`
-- `XE`: requires whitespace before integer line number
-- Example: `XE 2`
+- `XE`: line number must be attached directly to the command code
+- Example: `XE2`
 - `TTK`: requires `/T<n>-<quantity>`
 - Example: `TTK/T1-3`
 
@@ -67,11 +67,11 @@ AN15SEPILOMNL
 AN15SEPILOMNL/A5J
 SS1Y3
 NM2SMITH/John/Peter Mr
-APM - 09171234567
-APE - r@r.com
+APM09171234567
+APEr@r.com
 TKTL05MAR
 ER
-XE 2
+XE2
 FXP
 FXB
 TTK/T1-3

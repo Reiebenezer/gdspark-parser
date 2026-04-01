@@ -231,26 +231,26 @@ class Parser {
   }
 
   private parsePassengerMobile(params: CommandParam[]): ParsedCommand {
-    const mobile = this.parseDashedValue('Expected mobile number after APM');
+    const mobile = this.parseAttachedValue('Expected mobile number immediately after APM');
     params.push({ name: 'mobile', value: mobile });
     return { code: 'APM', params, mobile };
   }
 
   private parsePassengerEmail(params: CommandParam[]): ParsedCommand {
-    const email = this.parseDashedValue('Expected email after APE');
+    const email = this.parseAttachedValue('Expected email immediately after APE');
     params.push({ name: 'email', value: email });
     return { code: 'APE', params, email };
   }
 
-  private parseDashedValue(errorMessage: string): string {
-    this.skipWs();
-    if (this.match('DASH')) {
-      this.skipWs();
+  private parseAttachedValue(errorMessage: string): string {
+    const token = this.peek();
+    if (!token || ['EOF', 'WS', 'DASH'].includes(token.type)) {
+      throw new ParseError(errorMessage, token?.span);
     }
 
-    const text = this.collectRemainingText(true).trim();
+    const text = this.collectRemainingText(false).trim();
     if (text.length === 0) {
-      throw new ParseError(errorMessage, this.peek()?.span);
+      throw new ParseError(errorMessage, token.span);
     }
 
     return text;
@@ -281,15 +281,9 @@ class Parser {
   }
 
   private parseDeleteLine(params: CommandParam[]): ParsedCommand {
-    const ws = this.peek();
-    if (!ws || ws.type !== 'WS') {
-      throw new ParseError('Expected whitespace after XE', ws?.span);
-    }
-    this.index += 1;
-
     const lineToken = this.peek();
     if (!lineToken || lineToken.type !== 'INTEGER') {
-      throw new ParseError('XE expects a line number (e.g. XE 2)', lineToken?.span);
+      throw new ParseError('XE expects a line number immediately after XE (e.g. XE2)', lineToken?.span);
     }
 
     this.index += 1;

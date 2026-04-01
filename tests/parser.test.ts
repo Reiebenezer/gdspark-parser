@@ -52,13 +52,13 @@ describe('parse', () => {
   });
 
   test('parses APM and APE', () => {
-    const apm = parse('APM - 09171234567');
+    const apm = parse('APM09171234567');
     expect(apm.code).toBe('APM');
     if (apm.code === 'APM') {
       expect(apm.mobile).toBe('09171234567');
     }
 
-    const ape = parse('APE - r@r.com');
+    const ape = parse('APEr@r.com');
     expect(ape.code).toBe('APE');
     if (ape.code === 'APE') {
       expect(ape.email).toBe('r@r.com');
@@ -78,7 +78,7 @@ describe('parse', () => {
   });
 
   test('parses XE', () => {
-    const parsed = parse('XE 2');
+    const parsed = parse('XE2');
     expect(parsed.code).toBe('XE');
     if (parsed.code === 'XE') {
       expect(parsed.lineNumber).toBe(2);
@@ -117,8 +117,16 @@ describe('parse', () => {
     expect(() => parse('SSY3')).toThrow('SS payload must be <passengers><bookingClass><flightNumber>');
   });
 
-  test('throws for missing XE whitespace separator', () => {
-    expect(() => parse('XE2')).toThrow('Expected whitespace after XE');
+  test('throws for spaced APM input', () => {
+    expect(() => parse('APM - 09171234567')).toThrow('Expected mobile number immediately after APM');
+  });
+
+  test('throws for spaced APE input', () => {
+    expect(() => parse('APE - r@r.com')).toThrow('Expected email immediately after APE');
+  });
+
+  test('throws for spaced XE input', () => {
+    expect(() => parse('XE 2')).toThrow('XE expects a line number immediately after XE');
   });
 
   test('throws for invalid TTK selector', () => {

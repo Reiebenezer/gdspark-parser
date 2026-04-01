@@ -13,12 +13,15 @@ describe('tokenize', () => {
     expect(result.tokens.map((t) => t.type)).toEqual(['SS', 'WORD', 'EOF']);
   });
 
-  test('tokenizes APM/APE with dash separators', () => {
-    const apm = tokenize('APM - 09171234567');
-    expect(apm.tokens.map((t) => t.type)).toEqual(['APM', 'WS', 'DASH', 'WS', 'INTEGER', 'EOF']);
+  test('tokenizes compact APM/APE/XE commands', () => {
+    const apm = tokenize('APM09171234567');
+    expect(apm.tokens.map((t) => t.type)).toEqual(['APM', 'INTEGER', 'EOF']);
 
-    const ape = tokenize('APE - r@r.com');
-    expect(ape.tokens.map((t) => t.type)).toEqual(['APE', 'WS', 'DASH', 'WS', 'FREETEXT', 'EOF']);
+    const ape = tokenize('APEr@r.com');
+    expect(ape.tokens.map((t) => t.type)).toEqual(['APE', 'FREETEXT', 'EOF']);
+
+    const xe = tokenize('XE2');
+    expect(xe.tokens.map((t) => t.type)).toEqual(['XE', 'INTEGER', 'EOF']);
   });
 
   test('tokenizes TTK issue command', () => {
