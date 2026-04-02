@@ -38,10 +38,10 @@ The parser currently supports:
 - `APE` passenger email
 - `TKTL` ticketing time limit
 - `ER` end/save record
-- `XE` delete line number
-- `FXP` pricing on selected booking class
-- `FXB` lowest available pricing
-- `TTK` ticket issuance with quantity
+- `XE` cancel segment
+- `FXP` pricing on selected booking class (WIP)
+- `FXB` lowest available pricing (WIP)
+- `TTK` ticket issuance with quantity (WIP)
 
 ## Syntax Notes
 
@@ -52,10 +52,10 @@ The parser currently supports:
 - `NM`: one or more entries in `<count><SURNAME>/<Given>/<Given>` format, comma-separated for multiple entries; trailing title is supported
 - Example: `NM1SMITH/John Mr`, `NM1SMITH/John,1ROXAS/Peter`
 - `APM` / `APE`: value must be attached directly to the command code
-- Example: `APM09171234567`, `APEr@r.com`
+- Example: `APM09171234567`, `APEsomeone@gmail.com`
 - `TKTL`: compact date format `TKTLDDMMM`
 - Example: `TKTL05MAR`
-- `XE`: line number must be attached directly to the command code
+- `XE`: segment number must be attached directly to the command code
 - Example: `XE2`
 - `TTK`: requires `/T<n>-<quantity>`
 - Example: `TTK/T1-3`

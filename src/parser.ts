@@ -2,7 +2,7 @@ import { tokenize } from './lexer';
 import type {
   CommandCode,
   CommandParam,
-  NameEntry,
+  NameElement,
   ParsedCommand,
   SourceSpan,
   Token,
@@ -203,7 +203,7 @@ class Parser {
     };
   }
 
-  private parseNameEntry(value: string): NameEntry {
+  private parseNameEntry(value: string): NameElement {
     const match = value.match(/^(\d+)([A-Za-z]+)\/(.+)$/);
     if (!match) {
       throw new ParseError(`Invalid NM entry "${value}"; expected format like 1SMITH/John`);

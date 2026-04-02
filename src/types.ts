@@ -108,7 +108,7 @@ export type SellSegmentCommand = Command & {
   flightNumber: number;
 };
 
-export type NameEntry = {
+export type NameElement = {
   count: number;
   surname: string;
   givenNames: string[];
@@ -117,7 +117,7 @@ export type NameEntry = {
 export type NameCommand = Command & {
   code: 'NM';
   rawNames: string;
-  entries: NameEntry[];
+  entries: NameElement[];
   title?: string;
 };
 
@@ -142,7 +142,7 @@ export type EndRecordCommand = Command & {
   code: 'ER';
 };
 
-export type DeleteLineCommand = Command & {
+export type CancelSegmentCommand = Command & {
   code: 'XE';
   lineNumber: number;
 };
@@ -165,6 +165,6 @@ export type ParsedCommand =
   | PassengerEmailCommand
   | TicketingLimitCommand
   | EndRecordCommand
-  | DeleteLineCommand
+  | CancelSegmentCommand
   | PricingCommand
   | TicketIssueCommand;
