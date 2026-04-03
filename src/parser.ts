@@ -129,7 +129,7 @@ class Parser {
       code: 'AN',
       params,
       travelDate,
-      travelDay: day,
+      travelDay: Number(day),
       travelMonth: month,
       origin: origin.toUpperCase(),
       destination: destination.toUpperCase(),

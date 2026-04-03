@@ -1,6 +1,6 @@
 {
   "name": "@reiebenezer/gdspark-parser",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "GDSpark command lexer/parser library",
   "type": "module",
   "private": false,
